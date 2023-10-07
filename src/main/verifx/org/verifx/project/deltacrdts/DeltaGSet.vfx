@@ -1,0 +1,10 @@
+import org.verifx.project.deltacrdtsproofs.DeltaCRDT
+import org.verifx.project.deltacrdtsproofs.CvRDTProof1
+
+
+class DeltaGSet[V](s: Set[V] = new Set[V]()) extends DeltaCRDT[DeltaGSet[V]] {
+  def add(element: V): DeltaGSet[V] = new DeltaGSet[V]((new Set[V]()).add(element))
+  def lookup(element: V): Boolean = this.s.contains(element)
+  def merge(that: DeltaGSet[V]): DeltaGSet[V] = new DeltaGSet[V](this.s.union(that.s))
+}
+object DeltaGSet extends CvRDTProof1[DeltaGSet]
