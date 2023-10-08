@@ -9,6 +9,7 @@
     <option name="testKind" value="Class" />
     <option name="envs">
       <map>
+        <entry key="DYLD_LIBRARY_PATH" value="$PROJECT_DIR$" />
         <entry key="LD_LIBRARY_PATH" value="$PROJECT_DIR$" />
       </map>
     </option>
