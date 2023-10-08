@@ -11,4 +11,9 @@ class ProofTests extends FlatSpec with Prover {
   prove(proof)
 }
 
+ "EWFlag" should "be a CRDT" in {
+  val proof = ("EWFlag", "is_a_CvRDT")
+  prove(proof)
+ }
+
 }
