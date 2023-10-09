@@ -1,0 +1,30 @@
+class Dot[T](replica: T, operationNumber: Int)
+
+class DotSet[T](dotSet: Set[Dot[T]] = new Set[Dot[T]](),
+                 causalContext: Set[Dot[T]] = new Set[Dot[T]]()) {
+
+    def merge(that: DotSet[T]) = {
+      val intersect1 = this.dotSet.intersect(that.dotSet)
+      val except1 = this.dotSet.filter((d: Dot[T]) => !that.causalContext.contains(d))
+      val except2 = that.dotSet.filter((d: Dot[T]) => !this.causalContext.contains(d))
+
+      new DotSet(
+        intersect1.union(except1).union(except2),
+        this.causalContext.union(that.causalContext)
+      )
+    }
+
+    def add(dot: Dot[T]) = {
+      new DotSet(
+        new Set[Dot[T]]().add(dot),
+        new Set[Dot[T]]().add(dot)
+      )
+    }
+
+    def removeAll() = {
+      new DotSet(
+        new Set[Dot[T]](),
+        this.dotSet
+      )
+    }
+}

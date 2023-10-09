@@ -1,14 +1,14 @@
 import org.verifx.project.deltacrdtsproofs.DeltaCRDT
 import org.verifx.project.deltacrdtsproofs.CvRDTProof1
-import org.verifx.project.deltacrdts.DotKernel
+import org.verifx.project.deltacrdts.DotSet
 
-class EWFlag[ID](dk: DotKernel[Boolean, ID] = new DotKernel[Boolean, ID]()) extends DeltaCRDT[EWFlag[ID]] {
-    def enable(dot: Dot[ID]) : EWFlag[ID] = {
-        val aux = this.dk.rmv(true)
-        new EWFlag(aux.merge(this.dk.add(dot, true)))
+class EWFlag[T](dotSet: DotSet[T] = new DotSet[T]()) extends DeltaCRDT[EWFlag[T]] {
+    def enable(dot: Dot[T]) : EWFlag[T] = {
+        val aux = this.dotSet.removeAll()
+        new EWFlag(aux.merge(this.dotSet.add(dot)))
     }
-    def disable() : EWFlag[ID] = new EWFlag(this.dk.rmv(true))
-    def read() : Boolean = this.dk.read().contains(true)
-    def merge(that: EWFlag[ID]) : EWFlag[ID] = new EWFlag(this.dk.merge(that.dk))
+    def disable() : EWFlag[T] = new EWFlag(this.dotSet.removeAll())
+    def read() : Boolean = !this.dotSet.dotSet.isEmpty()
+    def merge(that: EWFlag[T]) : EWFlag[T] = new EWFlag(this.dotSet.merge(that.dotSet))
 }
 object EWFlag extends CvRDTProof1[EWFlag]
