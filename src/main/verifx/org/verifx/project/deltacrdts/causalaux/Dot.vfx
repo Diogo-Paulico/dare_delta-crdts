@@ -1,0 +1,1 @@
+class Dot[T](replica: T, opN: Int)

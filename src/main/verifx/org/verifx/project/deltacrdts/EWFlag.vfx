@@ -1,6 +1,7 @@
 import org.verifx.project.deltacrdtsproofs.DeltaCRDT
 import org.verifx.project.deltacrdtsproofs.CvRDTProof1
-import org.verifx.project.deltacrdts.DotSet
+import org.verifx.project.deltacrdts.causalaux.DotSet
+import org.verifx.project.deltacrdts.causalaux.Dot
 
 class EWFlag[T](dotSet: DotSet[T] = new DotSet[T]()) extends DeltaCRDT[EWFlag[T]] {
     def enable(dot: Dot[T]) : EWFlag[T] = {

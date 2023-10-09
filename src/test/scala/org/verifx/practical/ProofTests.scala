@@ -25,4 +25,9 @@ class ProofTests extends FlatSpec with Prover {
   prove(proof)
  }
 
+ "MVRegister" should "be a CRDT" in {
+  val proof = ("MVRegister", "is_a_CvRDT")
+  prove(proof)
+ }
+
 }

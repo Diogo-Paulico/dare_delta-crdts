@@ -1,6 +1,7 @@
 import org.verifx.project.deltacrdtsproofs.DeltaCRDT
 import org.verifx.project.deltacrdtsproofs.CvRDTProof2
-import org.verifx.project.deltacrdts.DotFun
+import org.verifx.project.deltacrdts.causalaux.DotFun
+import org.verifx.project.deltacrdts.causalaux.Dot
 
 class MVRegister[T,V](dotFun: DotFun[T,V] = new DotFun[T,V]()) extends DeltaCRDT[MVRegister[T,V]] {
     def write(dot: Dot[T], value: V) : MVRegister[T,V] = {

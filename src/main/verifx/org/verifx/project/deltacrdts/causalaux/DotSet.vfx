@@ -1,4 +1,4 @@
-class Dot[T](replica: T, opN: Int)
+import org.verifx.project.deltacrdts.causalaux.Dot
 
 class DotSet[T](dotSet: Set[Dot[T]] = new Set[Dot[T]](),
                  causalContext: Set[Dot[T]] = new Set[Dot[T]]()) {
