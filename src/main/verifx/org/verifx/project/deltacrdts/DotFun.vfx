@@ -1,0 +1,38 @@
+class Dot[T](replica: T, opN: Int)
+
+class DotFun[T,V](dataSet: Set[Tuple[Dot[T], V]] = new Set[Tuple[Dot[T], V]](),
+                 causalContext: Set[Dot[T]] = new Set[Dot[T]]()) {
+
+    def merge(that: DotFun[T,V]) : DotFun[T,V] = {
+
+      val union = this.dataSet.union(that.dataSet)
+
+      val domain1 = this.dataSet.map((t: Tuple[Dot[T], V]) => t.fst)
+      val domain2 = that.dataSet.map((t: Tuple[Dot[T], V]) => t.fst)
+      val intersectAux = domain1.intersect(domain2)
+
+      val intersect = union.filter((t: Tuple[Dot[T], V]) => intersectAux.contains(t.fst))
+
+      val except1 = this.dataSet.filter((t: Tuple[Dot[T], V]) => !that.causalContext.contains(t.fst))
+      val except2 = that.dataSet.filter((t: Tuple[Dot[T], V]) => !this.causalContext.contains(t.fst))
+
+      new DotFun(
+        intersect.union(except1).union(except2),
+        this.causalContext.union(that.causalContext)
+      )
+    }
+
+    def add(dot: Dot[T], data : V) : DotFun[T,V] = {
+      new DotFun(
+        new Set[Tuple[Dot[T], V]].add(new Tuple[Dot[T], V](dot, data)),
+        new Set[Dot[T]]().add(dot)
+      )
+    }
+
+    def removeAll() : DotFun[T,V] = {
+      new DotFun(
+        new Set[Tuple[Dot[T], V]],
+        this.dataSet.map((t: Tuple[Dot[T], V]) => t.fst)
+      )
+    }
+}

@@ -1,0 +1,14 @@
+import org.verifx.project.deltacrdtsproofs.DeltaCRDT
+import org.verifx.project.deltacrdtsproofs.CvRDTProof2
+import org.verifx.project.deltacrdts.DotFun
+
+class MVRegister[T,V](dotFun: DotFun[T,V] = new DotFun[T,V]()) extends DeltaCRDT[MVRegister[T,V]] {
+    def write(dot: Dot[T], value: V) : MVRegister[T,V] = {
+       val aux = this.dotFun.removeAll()
+       new MVRegister(aux.merge(this.dotFun.add(dot, value)))
+    }
+    def read() : Set[V] = this.dotFun.dataSet.map((t: Tuple[Dot[T], V]) => t.snd)
+    def clear() : MVRegister[T,V] = new MVRegister(this.dotFun.removeAll())
+    def merge(that: MVRegister[T,V]) : MVRegister[T,V] = new MVRegister(this.dotFun.merge(that.dotFun))
+}
+object MVRegister extends CvRDTProof2[MVRegister]
