@@ -1,0 +1,16 @@
+import org.verifx.project.deltacrdtsproofs.DeltaCRDT
+import org.verifx.project.deltacrdtsproofs.CvRDTProof1
+import org.verifx.project.deltacrdts.DeltaGCounter
+
+class DeltaPNCounter[K](p: DeltaGCounter[K] = new DeltaGCounter[K](), n: DeltaGCounter[K] = new DeltaGCounter[K]()) extends DeltaCRDT[DeltaPNCounter[K]] {
+  def inc(id: K): DeltaPNCounter[K] = new DeltaPNCounter[K](this.p.inc(id), new DeltaGCounter[K]())
+
+  def dec(id: K): DeltaPNCounter[K] = new DeltaPNCounter[K](new DeltaGCounter[K](), this.n.inc(id))
+
+  def value(replicas: Vector[K]) : Int = this.p.value(replicas) - this.n.value(replicas)
+
+
+  def merge(that: DeltaPNCounter[K]): DeltaPNCounter[K] = new DeltaPNCounter[K](this.p.merge(that.p), this.n.merge(that.n))
+
+}
+object DeltaPNCounter extends CvRDTProof1[DeltaPNCounter]

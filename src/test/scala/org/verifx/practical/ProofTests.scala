@@ -5,11 +5,20 @@ import org.scalatest.FlatSpec
 
 class ProofTests extends FlatSpec with Prover {
 
-
  "DeltaGSet" should "be a CRDT" in {
   val proof = ("DeltaGSet", "is_a_CvRDT")
   prove(proof)
 }
+
+ "DeltaGCounter" should "be a CRDT" in {
+  val proof = ("DeltaGCounter", "is_a_CvRDT")
+  prove(proof)
+ }
+
+ "DeltaPNCounter" should "be a CRDT" in {
+  val proof = ("DeltaPNCounter", "is_a_CvRDT")
+  prove(proof)
+ }
 
  "EWFlag" should "be a CRDT" in {
   val proof = ("EWFlag", "is_a_CvRDT")

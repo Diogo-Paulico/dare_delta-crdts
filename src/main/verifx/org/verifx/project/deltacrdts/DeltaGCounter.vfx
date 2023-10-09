@@ -1,0 +1,36 @@
+import org.verifx.project.deltacrdtsproofs.DeltaCRDT
+import org.verifx.project.deltacrdtsproofs.CvRDTProof1
+
+
+
+
+class DeltaGCounter[K](m: Map[K,Int] = new Map[K,Int]()) extends DeltaCRDT[DeltaGCounter[K]] {
+  def inc(id: K): DeltaGCounter[K] = {
+    val v = this.m.getOrElse(id,0)
+    val empty_m = new Map[K,Int]()
+    val n_m = empty_m.add(id, v+1)
+    new DeltaGCounter[K](n_m)
+  }
+
+  @recursive
+  private def computeValue(vals: Vector[Int], sum: Int = 0, replica: Int = 0): Int = {
+      if (replica >= 0 && replica < vals.size) {
+        val count = vals.get(replica)
+        this.computeValue(vals, sum + count, replica + 1)
+      }
+      else
+        sum
+  }
+
+  def value(replicas: Vector[K]) : Int = {
+    val replicaCounts = replicas.map((replica: K) => this.m.getOrElse(replica, 0))
+    this.computeValue(replicaCounts)
+  }
+
+
+  def merge(that: DeltaGCounter[K]): DeltaGCounter[K] = {
+    new DeltaGCounter[K](this.m.combine(that.m, (x: Int, y: Int) => if (x >= y) x else y))
+  }
+
+}
+object DeltaGCounter extends CvRDTProof1[DeltaGCounter]
