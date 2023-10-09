@@ -15,6 +15,7 @@ class DotSet[T](dotSet: Set[Dot[T]] = new Set[Dot[T]](),
     }
 
     def add(dot: Dot[T]) = {
+      this.dotSet.add(dot)
       new DotSet(
         new Set[Dot[T]]().add(dot),
         new Set[Dot[T]]().add(dot)
