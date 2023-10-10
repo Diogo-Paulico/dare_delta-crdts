@@ -10,6 +10,11 @@ class ProofTests extends FlatSpec with Prover {
   prove(proof)
 }
 
+ "Delta2PSet" should "be a CRDT" in{
+  val proof = ("Delta2PSet", "is_a_CvRDT")
+  prove(proof)
+ }
+
  "DeltaGCounter" should "be a CRDT" in {
   val proof = ("DeltaGCounter", "is_a_CvRDT")
   prove(proof)
