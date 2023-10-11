@@ -9,7 +9,7 @@ In this project we implemented the following 𝛿-CRDTs using the [VeriFx Langua
 * Delta Enable-Wins Flag (EWFlag)
 * Delta Multi-Value Registry (MVRegistry)
 
-Also implemented in this repository are the Dor, DotSet and DotFun necessary for causal 𝛿-CRDTs
+Also implemented in this repository are the Dot, DotSet and DotFun necessary for causal 𝛿-CRDTs
 
 The specification of these CRDTs can be found in the [Delta State Replicated Data Types paper](https://doi.org/10.48550/arXiv.1603.01529). 
 
