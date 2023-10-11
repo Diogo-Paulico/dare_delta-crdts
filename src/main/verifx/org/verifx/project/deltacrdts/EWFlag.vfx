@@ -4,12 +4,16 @@ import org.verifx.project.deltacrdts.causalaux.DotSet
 import org.verifx.project.deltacrdts.causalaux.Dot
 
 class EWFlag[T](dotSet: DotSet[T] = new DotSet[T]()) extends DeltaCRDT[EWFlag[T]] {
+
     def enable(dot: Dot[T]) : EWFlag[T] = {
         val aux = this.dotSet.removeAll()
         new EWFlag(aux.merge(this.dotSet.add(dot)))
     }
+
     def disable() : EWFlag[T] = new EWFlag(this.dotSet.removeAll())
+
     def read() : Boolean = !this.dotSet.dotSet.isEmpty()
+
     def merge(that: EWFlag[T]) : EWFlag[T] = new EWFlag(this.dotSet.merge(that.dotSet))
 }
 object EWFlag extends CvRDTProof1[EWFlag]

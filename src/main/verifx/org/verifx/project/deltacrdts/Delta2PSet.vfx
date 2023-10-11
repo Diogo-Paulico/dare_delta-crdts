@@ -3,10 +3,15 @@ import org.verifx.project.deltacrdtsproofs.CvRDTProof1
 
 
 class Delta2PSet[V](s: Set[V] = new Set[V](), r: Set[V] = new Set[V]()) extends DeltaCRDT[Delta2PSet[V]] {
+
   def add(element: V): Delta2PSet[V] = new Delta2PSet[V]((new Set[V]()).add(element), new Set[V]())
+
   def rmv(element: V): Delta2PSet[V] = if(this.lookup(element)) new Delta2PSet[V](new Set[V](), (new Set[V]()).add(element)) else new Delta2PSet[V]()
+
   def lookup(element: V): Boolean = this.s.contains(element) && !this.r.contains(element)
+
   def elements() : Set[V] = this.s.diff(this.r)
+
   def merge(that: Delta2PSet[V]): Delta2PSet[V] = new Delta2PSet[V](this.s.union(that.s), this.r.union(that.r))
 }
 object Delta2PSet extends CvRDTProof1[Delta2PSet]
